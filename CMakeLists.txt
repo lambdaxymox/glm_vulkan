@@ -29,6 +29,7 @@ enable_testing()
 add_executable(
     test_projection
     tests/test_orthographic_frustum_lh.cpp
+    tests/test_orthographic_frustum_rh.cpp
     tests/test_perspective_frustum_rh.cpp
     tests/test_perspective_frustum_lh.cpp
     tests/test_perspective_fov_rh.cpp
