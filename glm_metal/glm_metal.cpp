@@ -15,7 +15,7 @@ glm::mat4x4 glm_metal::orthographic_frustum_rh(float left, float right, float bo
     float c2r0 =  0.0f;
     float c2r1 =  0.0f;
     float c2r2 = -1.0f / (far - near);
-    float c2r3 =  1.0f;
+    float c2r3 =  0.0f;
 
     float c3r0 = -(right + left) / (right - left);
     float c3r1 = -(top + bottom) / (top - bottom);
@@ -44,7 +44,7 @@ glm::mat4x4 glm_metal::orthographic_frustum_lh(float left, float right, float bo
     float c2r0 = 0.0f;
     float c2r1 = 0.0f;
     float c2r2 = 1.0f / (far - near);
-    float c2r3 = 1.0f;
+    float c2r3 = 0.0f;
 
     float c3r0 = -(right + left) / (right - left);
     float c3r1 = -(top + bottom) / (top - bottom);
