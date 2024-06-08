@@ -12,10 +12,10 @@ TEST(PerspectiveFrustumLhTests, PerspectiveProjectionMatrix) {
     float near = 1.0f;
     float far = 100.0f;
     auto expected = glm::mat4x4 {
-        1.0f / 4.0f,  0.0f,         0.0f,            0.0f,
-        0.0f,         2.0f / 5.0f,  0.0f,            0.0f,
-        0.0f,        -1.0f / 5.0f,  100.0f / 99.0f,  1.0f,
-        0.0f,         0.0f,        -100.0f / 99.0f,  0.0f
+        1.0f / 4.0f,  0.0f,         0.0f,           0.0f,
+        0.0f,         2.0f / 5.0f,  0.0f,           0.0f,
+        0.0f,        -1.0f / 5.0f,  100.0f / 99.0f, 1.0f,
+        0.0f,         0.0f,        -100.0f / 99.0f, 0.0f
     };
     auto result = glm_metal::perspective_frustum_lh(left, right, bottom, top, near, far);
 
