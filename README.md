@@ -15,15 +15,18 @@ files `glm_metal.h` and `glm_metal.cpp` from the `glm_metal` folder into your
 source tree.
 
 ## Integrate The Source Tree For The Entire Library Into Your Project
-The second approach requires the `cmake` built tool. First, copy the source tree
+The second approach requires the `cmake` build tool. First, copy the source tree
 into the source tree for your project. Then, in your `CMakeLists.txt` file, add the 
 following line
 ```cmake
 add_subdirectory(./path/to/glm_metal)
 ```
-and the library is ready to use.
-
-Anywhere in your project that you use the library, just include the header
+and then link the library into your project
+```cmake
+target_link_library(ProjectName glm_metal)
+```
+and then the library is ready to use. Anywhere in your project that you use the 
+library, include the header
 ```cplusplus
 #include <glm_metal/glm_metal.h>
 ```

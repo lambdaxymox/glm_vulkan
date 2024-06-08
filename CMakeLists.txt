@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.28)
 project("glm_metal" VERSION 0.1.0)
+set(CMAKE_CXX_STANDARD 17)
 
 option(GLM_METAL_DISABLE_EXTRA_WARNINGS "Disable the flags `-Wall`, `-Werror`, and `-Wextra`" OFF)
-set(CMAKE_CXX_STANDARD 17)
 
 if (NOT GLM_METAL_DISABLE_EXTRA_WARNINGS)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror -Wextra")
@@ -26,70 +26,39 @@ target_link_libraries(glm_metal PUBLIC glm)
 
 enable_testing()
 
-add_executable(
+function(createTestSuite testSuiteName fileList)
+    add_executable(${testSuiteName} "${fileList}")
+    target_link_libraries(
+        ${testSuiteName}
+        glm_metal
+        glm
+        GTest::gtest_main
+    )
+endfunction()
+
+createTestSuite(
     test_orthographic_frustum_lh
     tests/test_orthographic_frustum_lh.cpp
 )
-target_link_libraries(
-    test_orthographic_frustum_lh
-    glm_metal
-    glm
-    GTest::gtest_main
-)
-
-add_executable(
+createTestSuite(
     test_orthographic_frustum_rh
     tests/test_orthographic_frustum_rh.cpp
 )
-target_link_libraries(
-    test_orthographic_frustum_rh
-    glm_metal
-    glm
-    GTest::gtest_main
-)
-
-add_executable(
+createTestSuite(
     test_perspective_fov_lh
     tests/test_perspective_fov_lh.cpp
 )
-target_link_libraries(
-    test_perspective_fov_lh
-    glm_metal
-    glm
-    GTest::gtest_main
-)
-
-add_executable(
+createTestSuite(
     test_perspective_fov_rh
     tests/test_perspective_fov_rh.cpp
 )
-target_link_libraries(
-    test_perspective_fov_rh
-    glm_metal
-    glm
-    GTest::gtest_main
-)
-
-add_executable(
+createTestSuite(
     test_perspective_frustum_lh
     tests/test_perspective_frustum_lh.cpp
 )
-target_link_libraries(
-    test_perspective_frustum_lh
-    glm_metal
-    glm
-    GTest::gtest_main
-)
-
-add_executable(
+createTestSuite(
     test_perspective_frustum_rh
     tests/test_perspective_frustum_rh.cpp
-)
-target_link_libraries(
-    test_perspective_frustum_rh
-    glm_metal
-    glm
-    GTest::gtest_main
 )
 
 include(GoogleTest)
