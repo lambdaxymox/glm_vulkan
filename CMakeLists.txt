@@ -27,20 +27,76 @@ target_link_libraries(glm_metal PUBLIC glm)
 enable_testing()
 
 add_executable(
-    test_projection
+    test_orthographic_frustum_lh
     tests/test_orthographic_frustum_lh.cpp
-    tests/test_orthographic_frustum_rh.cpp
-    tests/test_perspective_frustum_rh.cpp
-    tests/test_perspective_frustum_lh.cpp
-    tests/test_perspective_fov_rh.cpp
-    tests/test_perspective_fov_lh.cpp
 )
 target_link_libraries(
-    test_projection
+    test_orthographic_frustum_lh
     glm_metal
     glm
     GTest::gtest_main
 )
 
+add_executable(
+    test_orthographic_frustum_rh
+    tests/test_orthographic_frustum_rh.cpp
+)
+target_link_libraries(
+    test_orthographic_frustum_rh
+    glm_metal
+    glm
+    GTest::gtest_main
+)
+
+add_executable(
+    test_perspective_fov_lh
+    tests/test_perspective_fov_lh.cpp
+)
+target_link_libraries(
+    test_perspective_fov_lh
+    glm_metal
+    glm
+    GTest::gtest_main
+)
+
+add_executable(
+    test_perspective_fov_rh
+    tests/test_perspective_fov_rh.cpp
+)
+target_link_libraries(
+    test_perspective_fov_rh
+    glm_metal
+    glm
+    GTest::gtest_main
+)
+
+add_executable(
+    test_perspective_frustum_lh
+    tests/test_perspective_frustum_lh.cpp
+)
+target_link_libraries(
+    test_perspective_frustum_lh
+    glm_metal
+    glm
+    GTest::gtest_main
+)
+
+add_executable(
+    test_perspective_frustum_rh
+    tests/test_perspective_frustum_rh.cpp
+)
+target_link_libraries(
+    test_perspective_frustum_rh
+    glm_metal
+    glm
+    GTest::gtest_main
+)
+
+
 include(GoogleTest)
-gtest_discover_tests(test_projection)
+gtest_discover_tests(test_orthographic_frustum_lh)
+gtest_discover_tests(test_orthographic_frustum_rh)
+gtest_discover_tests(test_perspective_fov_lh)
+gtest_discover_tests(test_perspective_fov_rh)
+gtest_discover_tests(test_perspective_frustum_lh)
+gtest_discover_tests(test_perspective_frustum_rh)
