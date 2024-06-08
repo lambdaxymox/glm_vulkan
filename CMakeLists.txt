@@ -92,7 +92,6 @@ target_link_libraries(
     GTest::gtest_main
 )
 
-
 include(GoogleTest)
 gtest_discover_tests(test_orthographic_frustum_lh)
 gtest_discover_tests(test_orthographic_frustum_rh)
