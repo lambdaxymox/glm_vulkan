@@ -29,6 +29,7 @@ enable_testing()
 add_executable(
     test_projection
     tests/test_perspective_frustum_rh.cpp
+    tests/test_perspective_frustum_lh.cpp
 )
 target_link_libraries(
     test_projection
