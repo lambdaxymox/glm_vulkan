@@ -54,7 +54,7 @@ TEST(PerspectiveFrustumRhTests, PerspectiveProjectionMapsRightToPositiveOneInNDC
     EXPECT_FLOAT_EQ(result, expected);
 }
 
-TEST(PerspectiveFrustumRhTests, PerspectiveProjectionMapsBottomToNegativeOneInNDC) {
+TEST(PerspectiveFrustumRhTests, PerspectiveProjectionBottomInNDC) {
     float left = -4.0f;
     float right = 4.0f;
     float bottom = -2.0f;
@@ -64,13 +64,13 @@ TEST(PerspectiveFrustumRhTests, PerspectiveProjectionMapsBottomToNegativeOneInND
     auto matrix = glm_metal::perspective_frustum_rh(left, right, bottom, top, near, far);
     auto vector = glm::vec4 { 0.0f, bottom, -2.0f, 1.0f };
     auto projectedVector = matrix * vector;
-    float expected = -1.0f;
+    float expected = -6.0f / 5.0f;
     float result = projectedVector.y;
 
     EXPECT_FLOAT_EQ(result, expected);
 }
 
-TEST(PerspectiveFrustumRhTests, PerspectiveProjectionMapsTopToPositiveOneInNDC) {
+TEST(PerspectiveFrustumRhTests, PerspectiveProjectionTopInNDC) {
     float left = -4.0f;
     float right = 4.0f;
     float bottom = -2.0f;
@@ -80,7 +80,7 @@ TEST(PerspectiveFrustumRhTests, PerspectiveProjectionMapsTopToPositiveOneInNDC) 
     auto matrix = glm_metal::perspective_frustum_rh(left, right, bottom, top, near, far);
     auto vector = glm::vec4 { 0.0f, top, -2.0f, 1.0f };
     auto projectedVector = matrix * vector;
-    float expected = 1.0f;
+    float expected = 4.0f / 5.0f;
     float result = projectedVector.y;
 
     EXPECT_FLOAT_EQ(result, expected);
