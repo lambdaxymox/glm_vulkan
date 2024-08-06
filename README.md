@@ -35,7 +35,7 @@ and you're set to use the library.
 ## Building The Project
 To build the project, enter the source tree root and run the following commands
 ```sh
-cmake -B build
+cmake -S . -B build
 cmake --build build
 ```
 
