@@ -1,35 +1,35 @@
 #include <gtest/gtest.h>
 #include <glm/mat4x4.hpp>
 #include <glm/vec4.hpp>
-#include <glm_metal/glm_metal.h>
+#include <glm_vulkan/glm_vulkan.h>
 
 
-TEST(OrthographicFrustumLhTests, OrthographicProjectionMatrix) {
+TEST(OrthographicFrustumTests, OrthographicProjectionMatrix) {
     float left = -4.0f;
     float right = 4.0f;
-    float bottom = -2.0f;
-    float top = 3.0f;
+    float bottom = 2.0f;
+    float top = -3.0f;
     float near = 1.0f;
     float far = 100.0f;
     auto expected = glm::mat4x4 {
         1.0f / 4.0f,  0.0f,         0.0f,         0.0f,
         0.0f,         2.0f / 5.0f,  0.0f,         0.0f,
         0.0f,         0.0f,         1.0f / 99.0f, 0.0f,
-        0.0f,        -1.0f / 5.0f, -1.0f / 99.0f, 1.0f
+        0.0f,         1.0f / 5.0f, -1.0f / 99.0f, 1.0f
     };
-    auto result = glm_metal::orthographic_frustum_lh(left, right, bottom, top, near, far);
+    auto result = glm_vulkan::orthographic_frustum(left, right, bottom, top, near, far);
 
     EXPECT_EQ(result, expected);
 }
 
-TEST(OrthographicFrustumLhTests, OrthographicProjectionMapsLeftToNegativeOneInNDC) {
+TEST(OrthographicFrustumTests, OrthographicProjectionMapsLeftToNegativeOneInClipSpace) {
     float left = -4.0f;
     float right = 4.0f;
-    float bottom = -2.0f;
-    float top = 3.0f;
+    float bottom = 2.0f;
+    float top = -3.0f;
     float near = 1.0f;
     float far = 100.0f;
-    auto matrix = glm_metal::orthographic_frustum_lh(left, right, bottom, top, near, far);
+    auto matrix = glm_vulkan::orthographic_frustum(left, right, bottom, top, near, far);
     auto vector = glm::vec4 { left, 0.0f, 2.0f, 1.0f };
     auto projectedVector = matrix * vector;
     float expected = -1.0f;
@@ -38,14 +38,14 @@ TEST(OrthographicFrustumLhTests, OrthographicProjectionMapsLeftToNegativeOneInND
     EXPECT_FLOAT_EQ(result, expected);
 }
 
-TEST(OrthographicFrustumLhTests, OrthographicProjectionMapsRightToPositiveOneInNDC) {
+TEST(OrthographicFrustumTests, OrthographicProjectionMapsRightToPositiveOneInClipSpace) {
     float left = -4.0f;
     float right = 4.0f;
-    float bottom = -2.0f;
-    float top = 3.0f;
+    float bottom = 2.0f;
+    float top = -3.0f;
     float near = 1.0f;
     float far = 100.0f;
-    auto matrix = glm_metal::orthographic_frustum_lh(left, right, bottom, top, near, far);
+    auto matrix = glm_vulkan::orthographic_frustum(left, right, bottom, top, near, far);
     auto vector = glm::vec4 { right, 0.0f, 2.0f, 1.0f };
     auto projectedVector = matrix * vector;
     float expected = 1.0f;
@@ -54,31 +54,15 @@ TEST(OrthographicFrustumLhTests, OrthographicProjectionMapsRightToPositiveOneInN
     EXPECT_FLOAT_EQ(result, expected);
 }
 
-TEST(OrthographicFrustumLhTests, OrthographicProjectionMapsBottomToNegativeOneInNDC) {
+TEST(OrthographicFrustumTests, OrthographicProjectionMapsBottomToPositiveOneInClipSpace) {
     float left = -4.0f;
     float right = 4.0f;
-    float bottom = -2.0f;
-    float top = 3.0f;
+    float bottom = 2.0f;
+    float top = -3.0f;
     float near = 1.0f;
     float far = 100.0f;
-    auto matrix = glm_metal::orthographic_frustum_lh(left, right, bottom, top, near, far);
+    auto matrix = glm_vulkan::orthographic_frustum(left, right, bottom, top, near, far);
     auto vector = glm::vec4 { 0.0f, bottom, 2.0f, 1.0f };
-    auto projectedVector = matrix * vector;
-    float expected = -1.0f;
-    float result = projectedVector.y;
-
-    EXPECT_FLOAT_EQ(result, expected);
-}
-
-TEST(OrthographicFrustumLhTests, OrthographicProjectionMapsTopToPositiveOneInNDC) {
-    float left = -4.0f;
-    float right = 4.0f;
-    float bottom = -2.0f;
-    float top = 3.0f;
-    float near = 1.0f;
-    float far = 100.0f;
-    auto matrix = glm_metal::orthographic_frustum_lh(left, right, bottom, top, near, far);
-    auto vector = glm::vec4 { 0.0f, top, 2.0f, 1.0f };
     auto projectedVector = matrix * vector;
     float expected = 1.0f;
     float result = projectedVector.y;
@@ -86,14 +70,30 @@ TEST(OrthographicFrustumLhTests, OrthographicProjectionMapsTopToPositiveOneInNDC
     EXPECT_FLOAT_EQ(result, expected);
 }
 
-TEST(OrthographicFrustumLhTests, OrthographicProjectionMapsPositiveNearToZeroInNDC) {
+TEST(OrthographicFrustumTests, OrthographicProjectionMapsTopToNegativeOneInClipSpace) {
     float left = -4.0f;
     float right = 4.0f;
-    float bottom = -2.0f;
-    float top = 3.0f;
+    float bottom = 2.0f;
+    float top = -3.0f;
     float near = 1.0f;
     float far = 100.0f;
-    auto matrix = glm_metal::orthographic_frustum_lh(left, right, bottom, top, near, far);
+    auto matrix = glm_vulkan::orthographic_frustum(left, right, bottom, top, near, far);
+    auto vector = glm::vec4 { 0.0f, top, 2.0f, 1.0f };
+    auto projectedVector = matrix * vector;
+    float expected = -1.0f;
+    float result = projectedVector.y;
+
+    EXPECT_FLOAT_EQ(result, expected);
+}
+
+TEST(OrthographicFrustumTests, OrthographicProjectionMapsPositiveNearToZeroInClipSpace) {
+    float left = -4.0f;
+    float right = 4.0f;
+    float bottom = 2.0f;
+    float top = -3.0f;
+    float near = 1.0f;
+    float far = 100.0f;
+    auto matrix = glm_vulkan::orthographic_frustum(left, right, bottom, top, near, far);
     auto vector = glm::vec4 { 0.0f, 0.0f, near, 1.0f };
     auto projectedVector = matrix * vector;
     float expected = 0.0f;
@@ -102,14 +102,14 @@ TEST(OrthographicFrustumLhTests, OrthographicProjectionMapsPositiveNearToZeroInN
     EXPECT_FLOAT_EQ(result, expected);
 }
 
-TEST(OrthographicFrustumLhTests, OrthographicProjectionMapsPositiveFarToPositiveOneInNDC) {
+TEST(OrthographicFrustumTests, OrthographicProjectionMapsPositiveFarToPositiveOneInClipSpace) {
     float left = -4.0f;
     float right = 4.0f;
-    float bottom = -2.0f;
-    float top = 3.0f;
+    float bottom = 2.0f;
+    float top = -3.0f;
     float near = 1.0f;
     float far = 100.0f;
-    auto matrix = glm_metal::orthographic_frustum_lh(left, right, bottom, top, near, far);
+    auto matrix = glm_vulkan::orthographic_frustum(left, right, bottom, top, near, far);
     auto vector = glm::vec4 { 0.0f, 0.0f, far, 1.0f };
     auto projectedVector = matrix * vector;
     float expected = 1.0f;
@@ -118,14 +118,14 @@ TEST(OrthographicFrustumLhTests, OrthographicProjectionMapsPositiveFarToPositive
     EXPECT_FLOAT_EQ(result, expected);
 }
 
-TEST(OrthographicFrustumLhTests, OrthographicProjectionHomogeneousCoordinate) {
+TEST(OrthographicFrustumTests, OrthographicProjectionHomogeneousCoordinate) {
     float left = -4.0f;
     float right = 4.0f;
-    float bottom = -2.0f;
-    float top = 3.0f;
+    float bottom = 2.0f;
+    float top = -3.0f;
     float near = 1.0f;
     float far = 100.0f;
-    auto matrix = glm_metal::orthographic_frustum_lh(left, right, bottom, top, near, far);
+    auto matrix = glm_vulkan::orthographic_frustum(left, right, bottom, top, near, far);
     auto point = glm::vec4 { 0.0f, 0.0f, 99.0f, 1.0f };
     auto projectedPoint = matrix * point;
     float expected = 1.0f;
