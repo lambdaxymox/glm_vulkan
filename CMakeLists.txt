@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.28)
-project("glm_vulkan" VERSION 1.0.1)
+project("glm_vulkan" VERSION 1.0.2)
 set(CMAKE_CXX_STANDARD 17)
 
 option(glm_vulkan_DISABLE_EXTRA_WARNINGS "Disable the flags `-Wall`, `-Werror`, and `-Wextra`" OFF)
