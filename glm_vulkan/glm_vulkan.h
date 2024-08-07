@@ -41,9 +41,11 @@ namespace glm_vulkan {
     /// @endcode
     ///
     /// The transformation maps the eye space frustum volume contained in 
-    /// `[-right, right] x [-bottom, bottom] x [near, far]` to the normalized device 
-    /// coordinates `[-1, -1] x [-1, 1] x [0, 1]`. The projection matrix is given 
-    /// by
+    /// `[-right, right] x [-bottom, bottom] x [near, far]` to the clip space that 
+    /// maps to the normalized device coordinates `[-1, -1] x [-1, 1] x [0, 1]` 
+    /// under division by the `w-component`. 
+    ///
+    /// The projection matrix is given by
     ///
     /// @code{.unparsed}
     /// [ m[0, 0]  0        0        0       ]
@@ -99,8 +101,9 @@ namespace glm_vulkan {
     /// @li The clip space `y-axis` faces down.
     /// @li The clip space `z-axis` faces the camera forward direction.
     /// The transformation maps the eye space frustum volume contained in 
-    /// `[left, right] x [top, bottom] x [near, far]` to the normalized device 
-    /// coordinates `[-1, -1] x [-1, 1] x [0, 1]`. 
+    /// `[left, right] x [top, bottom] x [near, far]` to the clip space that maps 
+    /// to the normalized device coordinates `[-1, -1] x [-1, 1] x [0, 1]` under 
+    /// division by the `w-component`. 
     ///
     /// We take the coordinate system for the view space and clip spaces above
     /// to be the **canonical view space coordinate system** and the **canonical clip 

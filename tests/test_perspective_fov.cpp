@@ -50,31 +50,31 @@ TEST(PerspectiveFovTests, PerspectiveProjectionMapsRightToPositiveOneInClipSpace
     EXPECT_FLOAT_EQ(result, expected);
 }
 
-TEST(PerspectiveFovTests, PerspectiveProjectionMapsBottomToNegativeOneInClipSpace) {
+TEST(PerspectiveFovTests, PerspectiveProjectionMapsBottomToPositiveOneInClipSpace) {
     float fovyRadians = glm::pi<float>() / 2.0f;
     float aspectRatio = 4.0f / 3.0f;
     float near = 1.0f;
     float far = 100.0f;
     auto matrix = glm_vulkan::perspective_fov(fovyRadians, aspectRatio, near, far);
-    float bottom = -near;
+    float bottom = near;
     auto vector = glm::vec4 { 0.0f, bottom, 2.0f, 1.0f };
     auto projectedVector = matrix * vector;
-    float expected = -1.0f;
+    float expected = 1.0f;
     float result = projectedVector.y;
 
     EXPECT_FLOAT_EQ(result, expected);
 }
 
-TEST(PerspectiveFovTests, PerspectiveProjectionMapsTopToPositiveOneInClipSpace) {
+TEST(PerspectiveFovTests, PerspectiveProjectionMapsTopToNegativeOneInClipSpace) {
     float fovyRadians = glm::pi<float>() / 2.0f;
     float aspectRatio = 4.0f / 3.0f;
     float near = 1.0f;
     float far = 100.0f;
     auto matrix = glm_vulkan::perspective_fov(fovyRadians, aspectRatio, near, far);
-    float top = near;
+    float top = -near;
     auto vector = glm::vec4 { 0.0f, top, 2.0f, 1.0f };
     auto projectedVector = matrix * vector;
-    float expected = 1.0f;
+    float expected = -1.0f;
     float result = projectedVector.y;
 
     EXPECT_FLOAT_EQ(result, expected);
